@@ -5,8 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-public abstract class Product implements Serializable,
-        Comparable<Product>, Cloneable {
+public abstract class Product implements Serializable, Comparable<Product> {
     private static final long serialVersionUID = 1L;
 
     protected final UUID productId;
@@ -25,12 +24,6 @@ public abstract class Product implements Serializable,
     @Override
     public int compareTo(Product other) {
         return this.createdDate.compareTo(other.createdDate);
-    }
-
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        Product cloned = (Product) super.clone();
-        return cloned;
     }
 
     @Override

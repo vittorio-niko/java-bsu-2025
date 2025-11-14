@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ArrayList;
 
-import bsu.fpmi.nikonchik.javalabs.lab2.backend.entities.products.Product;
+//import bsu.fpmi.nikonchik.javalabs.lab2.backend.entities.products.Product;
 
-public class User implements Serializable, Comparable<User>, Cloneable {
+public class User implements Serializable, Comparable<User> {
     private static final long serialVersionUID = 1L;
 
     private final UUID userId;
@@ -35,11 +35,6 @@ public class User implements Serializable, Comparable<User>, Cloneable {
     }
 
     @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -55,7 +50,7 @@ public class User implements Serializable, Comparable<User>, Cloneable {
     @Override
     public String toString() {
         return String.format("User{id='%s', username='%s', created=%s}",
-                userId.toString(), username, createdDate.toString());
+                userId, username, createdDate);
     }
 
     public UUID getUserId() { return userId; }
