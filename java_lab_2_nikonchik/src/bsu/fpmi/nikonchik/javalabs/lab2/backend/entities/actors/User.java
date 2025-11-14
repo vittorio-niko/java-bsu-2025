@@ -31,7 +31,7 @@ public class User implements Serializable, Comparable<User>, Cloneable {
 
     @Override
     public int compareTo(User other) {
-        return this.createdDate.compareTo(other.createdDate);
+        return this.username.compareTo(other.username);
     }
 
     @Override
