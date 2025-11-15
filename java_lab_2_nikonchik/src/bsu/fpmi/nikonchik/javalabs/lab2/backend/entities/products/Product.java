@@ -9,7 +9,7 @@ public abstract class Product implements Serializable, Comparable<Product> {
     private static final long serialVersionUID = 1L;
 
     protected final UUID productId;
-    protected UUID ownerId;
+    protected final UUID ownerId;
     protected final LocalDateTime createdDate;
 
     protected Product(UUID productId, UUID ownerId, LocalDateTime createdDate) {

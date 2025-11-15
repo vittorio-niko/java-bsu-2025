@@ -9,10 +9,12 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Transaction implements Serializable, Comparable<Transaction> {
+    private static final long serialVersionUID = 1L;
+
     private final UUID id;
     private final TransactionType type;
     private final BigDecimal amount;
-    private LocalDateTime timestamp;
+    private final LocalDateTime timestamp;
     private TransactionStatus status;
     private final UUID fromAccount;
     private final UUID toAccount;
@@ -67,4 +69,12 @@ public class Transaction implements Serializable, Comparable<Transaction> {
                 fromAccount != null ? fromAccount : "N/A",
                 toAccount != null ? toAccount : "N/A");
     }
+
+    public UUID getId() { return id; }
+    public TransactionType getType() { return type; }
+    public BigDecimal getAmount() { return amount; }
+    public LocalDateTime getTimestamp() { return timestamp; }
+    public TransactionStatus getStatus() { return status; }
+    public UUID getFromAccount() { return fromAccount; }
+    public UUID getToAccount() { return toAccount; }
 }
