@@ -1,23 +1,50 @@
 package bsu.fpmi.nikonchik.javalabs.lab2.backend.entities.actions;
 
-import bsu.fpmi.nikonchik.javalabs.lab2.backend.entities.actors.User;
-
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@Entity
+@Table(name = "transactions")
 public class Transaction implements Serializable, Comparable<Transaction> {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 4L;
 
+    @Id
+    @Column(name = "transaction_id", nullable = false, updatable = false, unique = true)
     private final UUID id;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "transaction_type", nullable = false, updatable = false, length = 20)
     private final TransactionType type;
+
+    @Column(name = "amount", nullable = false, updatable = false, precision = 15, scale = 2)
     private final BigDecimal amount;
+
+    @Column(name = "timestamp", nullable = false, updatable = false)
     private final LocalDateTime timestamp;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, length = 20)
     private TransactionStatus status;
+
+    @Column(name = "from_account_id", updatable = false)
     private final UUID fromAccount;
+
+    @Column(name = "to_account_id", updatable = false)
     private final UUID toAccount;
+
+    protected Transaction() {
+        this.id = null;
+        this.type = null;
+        this.amount = null;
+        this.timestamp = null;
+        this.status = null;
+        this.fromAccount = null;
+        this.toAccount = null;
+    }
 
     public Transaction(UUID id, TransactionType type,
                        BigDecimal amount, LocalDateTime timestamp,
@@ -31,13 +58,13 @@ public class Transaction implements Serializable, Comparable<Transaction> {
         this.toAccount = toAccount;
     }
 
-    enum TransactionType {
+    public enum TransactionType {
         DEPOSIT,
         WITHDRAWAL,
         TRANSFER
     }
 
-    enum TransactionStatus {
+    public enum TransactionStatus {
         PENDING,
         COMPLETED,
         FAILED
@@ -77,4 +104,9 @@ public class Transaction implements Serializable, Comparable<Transaction> {
     public TransactionStatus getStatus() { return status; }
     public UUID getFromAccount() { return fromAccount; }
     public UUID getToAccount() { return toAccount; }
+
+    public void setStatus(TransactionStatus status) {
+        this.status = Objects.requireNonNull(status);
+    }
 }
+

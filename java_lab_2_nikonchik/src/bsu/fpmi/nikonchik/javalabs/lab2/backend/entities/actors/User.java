@@ -10,13 +10,13 @@ import java.util.UUID;
 @Entity
 @Table(name = "users")
 public class User implements Serializable, Comparable<User> {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3L;
 
     @Id
-    @Column(name = "user_id", nullable = false, unique = true)
+    @Column(name = "user_id", nullable = false, updatable = false, unique = true)
     private final UUID userId;
 
-    @Column(name = "username", nullable = false, unique = true, length = 50)
+    @Column(name = "username", nullable = false, updatable = false, unique = true, length = 50)
     private String username;
 
     @Column(name = "created_date", nullable = false, updatable = false)
@@ -29,7 +29,7 @@ public class User implements Serializable, Comparable<User> {
     )
     @Column(name = "product_id")
     private List<UUID> productsOwned;
-    
+
     protected User() {
         this.userId = null;
         this.username = null;
@@ -49,7 +49,6 @@ public class User implements Serializable, Comparable<User> {
                 "List of products cannot be null");
     }
 
-    // Остальные методы остаются без изменений
     @Override
     public int compareTo(User other) {
         return this.username.compareTo(other.username);
@@ -79,13 +78,5 @@ public class User implements Serializable, Comparable<User> {
     public LocalDateTime getCreatedDate() { return createdDate; }
     public List<UUID> getProductsOwned() { return productsOwned; }
 
-    public void setUsername(String username) {
-        this.username = Objects.requireNonNull(username,
-                "Username cannot be null");
-    }
-
-    public void setProductsOwned(List<UUID> productsOwned) {
-        this.productsOwned = Objects.requireNonNull(productsOwned,
-                "List of products cannot be null");
-    }
+    //addProduct
 }
