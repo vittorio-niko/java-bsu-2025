@@ -78,5 +78,7 @@ public class User implements Serializable, Comparable<User> {
     public LocalDateTime getCreatedDate() { return createdDate; }
     public List<UUID> getProductsOwned() { return productsOwned; }
 
-    //addProduct
+    public void addProduct(UUID product) {
+        productsOwned.add(product);
+    }
 }

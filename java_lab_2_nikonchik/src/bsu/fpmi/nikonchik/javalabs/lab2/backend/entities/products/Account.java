@@ -7,6 +7,8 @@ import java.util.UUID;
 import java.util.Objects;
 import java.math.BigDecimal;
 
+import bsu.fpmi.nikonchik.javalabs.lab2.backend.exceptions.AccountExceptions.*;
+
 @Entity
 @Table(name = "accounts")
 public class Account extends Product implements Comparable<Account>, Serializable {
@@ -39,18 +41,46 @@ public class Account extends Product implements Comparable<Account>, Serializabl
     }
 
     public Account(UUID productId, UUID ownerId, LocalDateTime createdDate,
-                   String accountNumber, BigDecimal initialBalance,
+                   String accountNumber, String account_name, BigDecimal initialBalance,
                    Currency currency) {
         super(productId, ownerId, createdDate);
         this.accountNumber = Objects.requireNonNull(accountNumber, "Account number cannot be null");
         this.balance = Objects.requireNonNull(initialBalance, "Initial balance cannot be null");
         this.currency = Objects.requireNonNull(currency, "Currency cannot be null");
         this.status = AccountStatus.ACTIVE;
-        this.accountName = accountName;
+        this.accountName = Objects.requireNonNull(accountName);
     }
 
     public enum Currency { USD, EUR, GBP, JPY, BYN }
-    public enum AccountStatus { ACTIVE, BLOCKED, CLOSED, SUSPENDED }
+    public enum AccountStatus { ACTIVE, BLOCKED }
+
+    public void withdraw(BigDecimal amount) {
+        validateAccountActive();
+        validateSufficientFunds(amount);
+        this.balance = balance.subtract(amount);
+    }
+
+    public void deposit(BigDecimal amount) {
+        validateAccountActive();
+        this.balance = balance.add(amount);
+    }
+
+    private void validateAccountActive() {
+        if (status != AccountStatus.ACTIVE) {
+            throw new AccountNotActiveException(
+                    String.format("Account %s is not active. Current status: %s", accountNumber, status)
+            );
+        }
+    }
+
+    private void validateSufficientFunds(BigDecimal amount) {
+        if (balance.compareTo(amount) < 0) {
+            throw new InsufficientFundsException(
+                    String.format("Insufficient funds in account %s. Balance: %s %s, Requested: %s %s",
+                            accountNumber, balance, currency, amount, currency)
+            );
+        }
+    }
 
     @Override
     public int compareTo(Account other) {
@@ -73,8 +103,8 @@ public class Account extends Product implements Comparable<Account>, Serializabl
 
     @Override
     public String toString() {
-        return String.format("Account{id='%s', number='%s', balance=%s %s, type=%s, status=%s, name='%s'}",
-                productId, accountNumber, balance, currency, status,
+        return String.format("Account{id='%s', number='%s', balance=%s %s, status=%s, name='%s'}",
+                getProductId(), accountNumber, balance, currency, status,
                 accountName != null ? accountName : "N/A");
     }
 
@@ -82,14 +112,20 @@ public class Account extends Product implements Comparable<Account>, Serializabl
     public BigDecimal getBalance() { return balance; }
     public Currency getCurrency() { return currency; }
     public AccountStatus getStatus() { return status; }
+    public boolean isActive() { return status == AccountStatus.ACTIVE; }
+    public boolean isBlocked() { return status == AccountStatus.BLOCKED; }
     public String getAccountName() { return accountName; }
 
     public void setBalance(BigDecimal balance) {
         this.balance = Objects.requireNonNull(balance, "Balance cannot be null");
     }
 
-    public void setStatus(AccountStatus status) {
-        this.status = Objects.requireNonNull(status, "Status cannot be null");
+    public void activate() {
+        this.status = AccountStatus.ACTIVE;
+    }
+
+    public void block() {
+        this.status = AccountStatus.BLOCKED;
     }
 
     public void setAccountName(String accountName) {
