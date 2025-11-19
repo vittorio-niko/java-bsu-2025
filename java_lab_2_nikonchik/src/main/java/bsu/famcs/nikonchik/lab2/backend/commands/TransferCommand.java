@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import bsu.famcs.nikonchik.lab2.backend.commands.policies.TransferCommandPolicy;
 import bsu.famcs.nikonchik.lab2.backend.services.AccountService;
 import bsu.famcs.nikonchik.lab2.backend.entities.events.Transaction;
-import bsu.famcs.nikonchik.lab2.backend.exceptions.CommandExceptions.*;
+import bsu.famcs.nikonchik.lab2.backend.exceptions.CommandExceptions.CommandExecutionException;
 
 public class TransferCommand extends Command {
     private final UUID fromAccountId;
@@ -40,8 +40,8 @@ public class TransferCommand extends Command {
         }
     }
 
-    public UUID getFromAccountId() { return fromAccountId; }
-    public UUID getToAccountId() { return toAccountId; }
-    public BigDecimal getAmount() { return amount; }
-    public UUID getTransactionId() { return transactionId; }
+//    public UUID getFromAccountId() { return fromAccountId; }
+//    public UUID getToAccountId() { return toAccountId; }
+//    public BigDecimal getAmount() { return amount; }
+//    public UUID getTransactionId() { return transactionId; }
 }

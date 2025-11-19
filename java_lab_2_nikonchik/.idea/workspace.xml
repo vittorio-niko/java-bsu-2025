@@ -5,25 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4695db4-b485-4969-8a24-ed1f6316902e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/FreezeCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/policies/CommandPolicy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/policies/FreezeCommandPolicy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/policies/TransferCommandPolicy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/actors/Actor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/actors/Admin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/actors/PermissionLevel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/AccountFreezeEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/repositories/AccountFreezeActionsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/FreezeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/FreezeCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/TransferCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/TransferCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/actions/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/Transaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/actors/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/actors/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/products/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/products/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/handlers/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/handlers/CommandHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/repositories/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/repositories/AccountRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/repositories/TransactionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/repositories/TransactionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/services/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/services/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/policies/FreezeCommandPolicy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/policies/FreezeCommandPolicy.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
