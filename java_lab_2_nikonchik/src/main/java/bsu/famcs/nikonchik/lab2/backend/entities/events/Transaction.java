@@ -1,4 +1,4 @@
-package bsu.famcs.nikonchik.lab2.backend.entities.actions;
+package bsu.famcs.nikonchik.lab2.backend.entities.events;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -54,12 +54,18 @@ public class Transaction implements Serializable, Comparable<Transaction> {
                        BigDecimal amount, LocalDateTime timestamp,
                        TransactionStatus status, String description,
                        UUID fromAccount, UUID toAccount) {
-        this.id = Objects.requireNonNull(id);
-        this.type = Objects.requireNonNull(type);
-        this.amount = Objects.requireNonNull(amount);
-        this.timestamp = Objects.requireNonNull(timestamp);
-        this.status = Objects.requireNonNull(status);
+        this.id = Objects.requireNonNull(id,
+                "Transaction ID cannot be null");
+        this.type = Objects.requireNonNull(type,
+                "Transaction type cannot be null");
+        this.amount = Objects.requireNonNull(amount,
+                "Transaction amount cannot be null");
+        this.timestamp = Objects.requireNonNull(timestamp,
+                "Transaction timestamp cannot be null");
+        this.status = Objects.requireNonNull(status,
+                "Transaction status cannot be null");
         this.description = description;
+
         this.fromAccount = fromAccount;
         this.toAccount = toAccount;
     }

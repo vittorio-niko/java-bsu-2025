@@ -8,49 +8,32 @@ import java.util.Objects;
 import java.util.UUID;
 
 //TODO:
-//1) паттерн команда для транзакции и заморозки счета
 //1.1) наладить связь с бд
-//2) добавить админа (и абстрактный класс actor)
-//
+//стратегии для валидации исполнения команд
+//дописать разморозку счета
+//написать ответы на вопросы
+//накатить асинхронность
+//сделать интерфейс
 
 @Entity
 @Table(name = "users")
-public class User implements Serializable, Comparable<User> {
-    private static final long serialVersionUID = 3L;
-
-    @Id
-    @Column(name = "user_id", nullable = false, updatable = false, unique = true)
-    private final UUID userId;
-
-    @Column(name = "username", nullable = false, updatable = false, unique = true, length = 50)
-    private String username;
-
-    @Column(name = "created_date", nullable = false, updatable = false)
-    private final LocalDateTime createdDate;
-
+public class User extends Actor implements Comparable<User> {
     @ElementCollection
     @CollectionTable(
             name = "user_products",
-            joinColumns = @JoinColumn(name = "user_id")
+            joinColumns = @JoinColumn(name = "actor_id")
     )
-    @Column(name = "product_id")
+    @Column(name = "products_id")
     private List<UUID> productsOwned;
 
     protected User() {
-        this.userId = null;
-        this.username = null;
-        this.createdDate = null;
+        super();
         this.productsOwned = null;
     }
 
-    public User(UUID userId, String username,
+    public User(UUID actorId, String username,
                 LocalDateTime createdDate, List<UUID> productsOwned) {
-        this.userId = Objects.requireNonNull(userId,
-                "User id cannot be null");
-        this.username = Objects.requireNonNull(username,
-                "Username cannot be null");
-        this.createdDate = Objects.requireNonNull(createdDate,
-                "Created date cannot be null");
+        super(actorId, username, createdDate, PermissionLevel.USER);
         this.productsOwned = Objects.requireNonNull(productsOwned,
                 "List of products cannot be null");
     }
@@ -61,27 +44,11 @@ public class User implements Serializable, Comparable<User> {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(userId, user.userId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(userId);
-    }
-
-    @Override
     public String toString() {
         return String.format("User{id='%s', username='%s', created=%s}",
-                userId, username, createdDate);
+                actorId, username, createdDate);
     }
 
-    public UUID getUserId() { return userId; }
-    public String getUsername() { return username; }
-    public LocalDateTime getCreatedDate() { return createdDate; }
     public List<UUID> getProductsOwned() { return productsOwned; }
 
     public void addProduct(UUID product) {
@@ -90,4 +57,5 @@ public class User implements Serializable, Comparable<User> {
         );
     }
 }
+
 

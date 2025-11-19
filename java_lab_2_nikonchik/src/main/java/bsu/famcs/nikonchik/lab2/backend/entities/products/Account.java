@@ -1,7 +1,6 @@
 package bsu.famcs.nikonchik.lab2.backend.entities.products;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.Objects;
@@ -11,7 +10,7 @@ import bsu.famcs.nikonchik.lab2.backend.exceptions.AccountExceptions.*;
 
 @Entity
 @Table(name = "accounts")
-public class Account extends Product implements Comparable<Account>, Serializable {
+public class Account extends Product implements Comparable<Account> {
     private static final long serialVersionUID = 2L;
 
     @Column(name = "account_number", nullable = false, updatable = false, unique = true, length = 20)
@@ -52,7 +51,7 @@ public class Account extends Product implements Comparable<Account>, Serializabl
     }
 
     public enum Currency { USD, EUR, GBP, JPY, BYN }
-    public enum AccountStatus { ACTIVE, BLOCKED }
+    public enum AccountStatus { ACTIVE, FROZEN }
 
     public void withdraw(BigDecimal amount) {
         validateAccountActive();
@@ -68,7 +67,8 @@ public class Account extends Product implements Comparable<Account>, Serializabl
     private void validateAccountActive() {
         if (status != AccountStatus.ACTIVE) {
             throw new AccountNotActiveException(
-                    String.format("Account %s is not active. Current status: %s", accountNumber, status)
+                    String.format("Account %s is not active. Current status: %s",
+                            accountNumber, status)
             );
         }
     }
@@ -113,7 +113,7 @@ public class Account extends Product implements Comparable<Account>, Serializabl
     public Currency getCurrency() { return currency; }
     public AccountStatus getStatus() { return status; }
     public boolean isActive() { return status == AccountStatus.ACTIVE; }
-    public boolean isBlocked() { return status == AccountStatus.BLOCKED; }
+    public boolean isFrozen() { return status == AccountStatus.FROZEN; }
     public String getAccountName() { return accountName; }
 
     public void setBalance(BigDecimal balance) {
@@ -124,8 +124,8 @@ public class Account extends Product implements Comparable<Account>, Serializabl
         this.status = AccountStatus.ACTIVE;
     }
 
-    public void block() {
-        this.status = AccountStatus.BLOCKED;
+    public void freeze() {
+        this.status = AccountStatus.FROZEN;
     }
 
     public void setAccountName(String accountName) {

@@ -7,23 +7,26 @@ import java.math.BigDecimal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import bsu.famcs.nikonchik.lab2.backend.entities.actions.Transaction;
-import bsu.famcs.nikonchik.lab2.backend.entities.actions.Transaction.*;
+import bsu.famcs.nikonchik.lab2.backend.entities.events.Transaction;
+import bsu.famcs.nikonchik.lab2.backend.entities.events.Transaction.*;
 import bsu.famcs.nikonchik.lab2.backend.entities.products.Account;
 import bsu.famcs.nikonchik.lab2.backend.exceptions.AccountExceptions.*;
-
-import bsu.famcs.nikonchik.lab2.backend.repositories.AccountRepository;
-import bsu.famcs.nikonchik.lab2.backend.repositories.TransactionRepository;
+import bsu.famcs.nikonchik.lab2.backend.entities.events.AccountFreezeEvent;
+import bsu.famcs.nikonchik.lab2.backend.entities.events.AccountFreezeEvent.ActionType;
+import bsu.famcs.nikonchik.lab2.backend.repositories.*;
 
 @Service
 public class AccountService {
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
+    private final AccountFreezeActionsRepository accountFreezeActionsRepository;
 
     public AccountService(AccountRepository accountRepository,
-                          TransactionRepository transactionRepository) {
+                          TransactionRepository transactionRepository,
+                          AccountFreezeActionsRepository accountFreezeActionsRepository) {
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
+        this.accountFreezeActionsRepository = accountFreezeActionsRepository;
     }
 
     @Transactional
@@ -51,7 +54,7 @@ public class AccountService {
                 description,
                 fromAccountId,
                 toAccountId
-        );
+        ); //заменить на фабрику
 
         fromAccount.withdraw(amount);
         toAccount.deposit(amount);
@@ -63,6 +66,31 @@ public class AccountService {
         transactionRepository.save(transaction);
 
         return transaction;
+    }
+
+    public AccountFreezeEvent freezeAccount(UUID accountToFreeze, String description) {
+        Account account = accountRepository.findById(accountToFreeze)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Account not found: " + accountToFreeze));
+
+        if (account.isFrozen()) {
+            throw new IllegalStateException("Account is already frozen: " + accountToFreeze);
+        }
+
+        account.freeze();
+        accountRepository.save(account);
+
+        AccountFreezeEvent event = new AccountFreezeEvent(
+                UUID.randomUUID(),
+                accountToFreeze,
+                LocalDateTime.now(),
+                description,
+                ActionType.FREEZE
+        );
+
+        accountFreezeActionsRepository.save(event);
+
+        return event;
     }
 }
 

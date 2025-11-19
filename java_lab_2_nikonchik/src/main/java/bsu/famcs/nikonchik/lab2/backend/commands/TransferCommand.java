@@ -3,30 +3,27 @@ package bsu.famcs.nikonchik.lab2.backend.commands;
 import java.util.UUID;
 import java.math.BigDecimal;
 
+import bsu.famcs.nikonchik.lab2.backend.commands.policies.TransferCommandPolicy;
 import bsu.famcs.nikonchik.lab2.backend.services.AccountService;
-import bsu.famcs.nikonchik.lab2.backend.entities.actions.Transaction;
+import bsu.famcs.nikonchik.lab2.backend.entities.events.Transaction;
 import bsu.famcs.nikonchik.lab2.backend.exceptions.CommandExceptions.*;
 
-public class TransferCommand implements Command {
-    private final UUID commandId;
+public class TransferCommand extends Command {
     private final UUID fromAccountId;
     private final UUID toAccountId;
     private final BigDecimal amount;
-    private final String description;
     private final AccountService accountService;
-    private CommandStatus status;
     private UUID transactionId;
 
-    public TransferCommand(UUID fromAccountId, UUID toAccountId,
-                           BigDecimal amount, String description,
-                           AccountService accountService) {
-        this.commandId = UUID.randomUUID();
+    public TransferCommand(UUID initiatorId, UUID fromAccountId,
+                           UUID toAccountId, BigDecimal amount,
+                           String description, AccountService accountService) {
+        super(initiatorId, CommandStatus.PENDING,
+                description, new TransferCommandPolicy());
         this.fromAccountId = fromAccountId;
         this.toAccountId = toAccountId;
         this.amount = amount;
-        this.description = description;
         this.accountService = accountService;
-        this.status = CommandStatus.PENDING;
     }
 
     @Override
@@ -43,12 +40,6 @@ public class TransferCommand implements Command {
         }
     }
 
-    @Override
-    public CommandStatus getStatus() {
-        return status;
-    }
-
-    public UUID getCommandId() { return commandId; }
     public UUID getFromAccountId() { return fromAccountId; }
     public UUID getToAccountId() { return toAccountId; }
     public BigDecimal getAmount() { return amount; }
