@@ -68,6 +68,7 @@ public class AccountService {
         return transaction;
     }
 
+    @Transactional
     public AccountFreezeEvent freezeAccount(UUID accountToFreeze, String description) {
         Account account = accountRepository.findById(accountToFreeze)
                 .orElseThrow(() ->
@@ -86,6 +87,32 @@ public class AccountService {
                 LocalDateTime.now(),
                 description,
                 ActionType.FREEZE
+        );
+
+        accountFreezeActionsRepository.save(event);
+
+        return event;
+    }
+
+    @Transactional
+    public AccountFreezeEvent unfreezeAccount(UUID accountToUnfreeze, String description) {
+        Account account = accountRepository.findById(accountToUnfreeze)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Account not found: " + accountToUnfreeze));
+
+        if (account.isActive()) {
+            throw new IllegalStateException("Account is already active: " + accountToUnfreeze);
+        }
+
+        account.activate();
+        accountRepository.save(account);
+
+        AccountFreezeEvent event = new AccountFreezeEvent(
+                UUID.randomUUID(),
+                accountToUnfreeze,
+                LocalDateTime.now(),
+                description,
+                ActionType.UNFREEZE
         );
 
         accountFreezeActionsRepository.save(event);

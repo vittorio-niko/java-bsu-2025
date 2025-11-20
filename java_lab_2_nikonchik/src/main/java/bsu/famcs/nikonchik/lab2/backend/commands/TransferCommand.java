@@ -39,9 +39,4 @@ public class TransferCommand extends Command {
             throw new CommandExecutionException("Transfer failed", e);
         }
     }
-
-//    public UUID getFromAccountId() { return fromAccountId; }
-//    public UUID getToAccountId() { return toAccountId; }
-//    public BigDecimal getAmount() { return amount; }
-//    public UUID getTransactionId() { return transactionId; }
 }

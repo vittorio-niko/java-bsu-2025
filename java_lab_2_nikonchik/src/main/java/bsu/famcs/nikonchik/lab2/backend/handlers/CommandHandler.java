@@ -7,7 +7,9 @@ public class CommandHandler {
     public void executeCommand(Command command, Actor actor) {
         if (!command.canExecuteBy(actor)) {
             throw new SecurityException(
-                    "Actor does not have rights to execute the command"
+                    String.format(
+                            "%s does not have rights to execute the command", actor
+                    )
             );
         }
         command.execute();
