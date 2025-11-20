@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b4695db4-b485-4969-8a24-ed1f6316902e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/FreezeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/FreezeCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/TransferCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/TransferCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/policies/FreezeCommandPolicy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/policies/FreezeCommandPolicy.java" afterDir="false" />
-    </list>
+    <list default="true" id="b4695db4-b485-4969-8a24-ed1f6316902e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
