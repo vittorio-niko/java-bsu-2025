@@ -1,29 +1,24 @@
-package bsu.famcs.nikonchik.lab2.backend.commands;
+package bsu.famcs.nikonchik.lab2.backend.commands.moneyflowcommands;
 
 import java.util.UUID;
 import java.math.BigDecimal;
 
 import bsu.famcs.nikonchik.lab2.backend.commands.policies.TransferCommandPolicy;
 import bsu.famcs.nikonchik.lab2.backend.services.AccountService;
-import bsu.famcs.nikonchik.lab2.backend.entities.events.Transaction;
+import bsu.famcs.nikonchik.lab2.backend.entities.events.moneyflowevents.Transaction;
 import bsu.famcs.nikonchik.lab2.backend.exceptions.CommandExceptions.CommandExecutionException;
 
-public class TransferCommand extends Command {
+public class TransferCommand extends MoneyFlowCommand {
     private final UUID fromAccountId;
     private final UUID toAccountId;
-    private final BigDecimal amount;
-    private final AccountService accountService;
-    private UUID transactionId;
 
     public TransferCommand(UUID initiatorId, UUID fromAccountId,
                            UUID toAccountId, BigDecimal amount,
                            String description, AccountService accountService) {
-        super(initiatorId, CommandStatus.PENDING,
-                description, new TransferCommandPolicy());
+        super(initiatorId, CommandStatus.PENDING, description,
+                new TransferCommandPolicy(), amount, accountService);
         this.fromAccountId = fromAccountId;
         this.toAccountId = toAccountId;
-        this.amount = amount;
-        this.accountService = accountService;
     }
 
     @Override
@@ -39,4 +34,7 @@ public class TransferCommand extends Command {
             throw new CommandExecutionException("Transfer failed", e);
         }
     }
+
+    public UUID getFromAccountId() { return fromAccountId; }
+    public UUID getToAccountId() { return toAccountId; }
 }

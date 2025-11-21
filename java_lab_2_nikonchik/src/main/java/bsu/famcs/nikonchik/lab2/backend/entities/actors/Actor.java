@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @MappedSuperclass
 public abstract class Actor implements Serializable {
-    private static final long serialVersionUID = 5L;
+    private static final long serialVersionUID = 9L;
 
     @Id
     @Column(name = "actor_id", nullable = false, updatable = false, unique = true)

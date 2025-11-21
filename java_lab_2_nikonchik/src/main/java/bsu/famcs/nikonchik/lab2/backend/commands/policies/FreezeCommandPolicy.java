@@ -3,7 +3,7 @@ package bsu.famcs.nikonchik.lab2.backend.commands.policies;
 import bsu.famcs.nikonchik.lab2.backend.commands.Command;
 import bsu.famcs.nikonchik.lab2.backend.entities.actors.Actor;
 import bsu.famcs.nikonchik.lab2.backend.entities.actors.PermissionLevel;
-import bsu.famcs.nikonchik.lab2.backend.commands.FreezeCommand;
+import bsu.famcs.nikonchik.lab2.backend.commands.productconditioncommands.FreezeCommand;
 
 public class FreezeCommandPolicy implements CommandPolicy {
     @Override

@@ -1,20 +1,28 @@
 package bsu.famcs.nikonchik.lab2.backend.entities.actors;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 //TODO:
-//написать отдельную обработку снятия денег и пополнения счета (развести с transfer)
-//добавить entity классы, новые команды, новые методы в service
+
 //сделать фабрики команд, entity классов
 //1.1) наладить связь с бд
 //написать ответы на вопросы
-//накатить асинхронность
-//сделать gui? - вряд ли успею...
+//добавить корректное сохранение данных в бд
+//накатить асинхронность на слой CommandHandler, возможно
+//добавить блокировки в классы репозиториев для решения race conditions
+
+//дописать абстрактный класс event и унаследовать от него все ивенты
+//надо наладить передачу Id актора, вызывающего команду, в сервисный слой,
+//чтобы все адекватно логировать (у каждого event должен быть initiator id)
+//в метод execute у команды передавать Id актора
+
+//проверить все аннотации спринга
+
+//доделать лог классы
 
 @Entity
 @Table(name = "users")
@@ -22,7 +30,7 @@ public class User extends Actor implements Comparable<User> {
     @ElementCollection
     @CollectionTable(
             name = "user_products",
-            joinColumns = @JoinColumn(name = "actor_id")
+            joinColumns = @JoinColumn(name = "owner_id")
     )
     @Column(name = "products_id")
     private List<UUID> productsOwned;

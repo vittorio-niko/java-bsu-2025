@@ -1,9 +1,10 @@
-package bsu.famcs.nikonchik.lab2.backend.commands;
+package bsu.famcs.nikonchik.lab2.backend.commands.productconditioncommands;
 
 import java.util.UUID;
 
+import bsu.famcs.nikonchik.lab2.backend.commands.Command;
 import bsu.famcs.nikonchik.lab2.backend.commands.policies.FreezeCommandPolicy;
-import bsu.famcs.nikonchik.lab2.backend.entities.events.AccountFreezeEvent;
+import bsu.famcs.nikonchik.lab2.backend.entities.events.lifecycleevents.AccountFreezeEvent;
 import bsu.famcs.nikonchik.lab2.backend.exceptions.CommandExceptions;
 import bsu.famcs.nikonchik.lab2.backend.services.AccountService;
 

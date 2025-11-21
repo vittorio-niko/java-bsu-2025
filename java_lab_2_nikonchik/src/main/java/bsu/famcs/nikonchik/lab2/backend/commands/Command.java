@@ -12,7 +12,7 @@ public abstract class Command {
     protected final String description;
     protected final CommandPolicy policy;
 
-    Command(UUID initiatorId, CommandStatus status,
+    protected Command(UUID initiatorId, CommandStatus status,
             String description, CommandPolicy policy) {
         this.commandId = UUID.randomUUID();
         this.initiatorId = initiatorId;

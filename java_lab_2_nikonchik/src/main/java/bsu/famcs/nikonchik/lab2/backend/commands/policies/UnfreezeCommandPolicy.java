@@ -1,7 +1,7 @@
 package bsu.famcs.nikonchik.lab2.backend.commands.policies;
 
 import bsu.famcs.nikonchik.lab2.backend.commands.Command;
-import bsu.famcs.nikonchik.lab2.backend.commands.UnfreezeCommand;
+import bsu.famcs.nikonchik.lab2.backend.commands.productconditioncommands.UnfreezeCommand;
 import bsu.famcs.nikonchik.lab2.backend.entities.actors.Actor;
 import bsu.famcs.nikonchik.lab2.backend.entities.actors.PermissionLevel;
 
