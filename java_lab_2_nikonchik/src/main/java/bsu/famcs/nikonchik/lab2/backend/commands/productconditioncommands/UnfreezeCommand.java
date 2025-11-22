@@ -25,7 +25,7 @@ public class UnfreezeCommand extends Command {
     public void execute() {
         try {
             AccountFreezeEvent event = accountService.unfreezeAccount(
-                    accountToUnfreeze, description
+                    initiatorId, accountToUnfreeze, description
             );
             this.accountFreezeEventId = event.getEventId();
             this.status = CommandStatus.EXECUTED;
@@ -34,4 +34,6 @@ public class UnfreezeCommand extends Command {
             throw new CommandExceptions.CommandExecutionException("Freeze action failed", e);
         }
     }
+
+    public UUID getAccountFreezeEventId() { return accountFreezeEventId; }
 }

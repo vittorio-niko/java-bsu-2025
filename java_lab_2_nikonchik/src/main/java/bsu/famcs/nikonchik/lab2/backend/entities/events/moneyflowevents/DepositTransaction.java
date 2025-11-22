@@ -21,18 +21,21 @@ public class DepositTransaction extends Transaction {
         this.depositMethod = null;
     }
 
-    public DepositTransaction(UUID id, BigDecimal amount, LocalDateTime timestamp,
+    public DepositTransaction(UUID id, UUID initiatorId,
+                              BigDecimal amount, LocalDateTime timestamp,
                               TransactionStatus status, String description,
                               UUID toAccount, String depositMethod) {
-        super(id, amount, timestamp, status, description);
-        this.toAccount = Objects.requireNonNull(toAccount, "To account cannot be null");
-        this.depositMethod = depositMethod;
+        super(id, initiatorId, amount, timestamp, status, description);
+        this.toAccount = Objects.requireNonNull(toAccount,
+                "To account cannot be null");
+        this.depositMethod = Objects.requireNonNull(depositMethod,
+                "Deposit method cannot be null");
     }
 
     @Override
     public String toString() {
         return String.format("DepositTransaction{id='%s', amount=%s, toAccount='%s', method='%s'}",
-                id, amount, toAccount, depositMethod);
+                eventId, amount, toAccount, depositMethod);
     }
 
     public UUID getToAccount() { return toAccount; }

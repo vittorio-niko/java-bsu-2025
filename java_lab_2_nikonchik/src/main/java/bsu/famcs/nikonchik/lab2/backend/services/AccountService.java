@@ -35,8 +35,9 @@ public class AccountService {
     }
 
     @Transactional
-    public TransferTransaction transferFunds(UUID fromAccountId, UUID toAccountId,
-                                     BigDecimal amount, String description) {
+    public TransferTransaction transferFunds(UUID initiatorId, UUID fromAccountId,
+                                             UUID toAccountId, BigDecimal amount,
+                                             String description) {
         Account fromAccount = accountRepository.findById(fromAccountId)
                 .orElseThrow(() -> new AccountNotFoundException(fromAccountId));
         validateAccountActive(fromAccount);
@@ -46,7 +47,7 @@ public class AccountService {
         validateAccountActive(toAccount);
 
         TransferTransaction transaction = transactionFactory.createTransfer(
-                fromAccountId, toAccountId, amount, description
+                initiatorId, fromAccountId, toAccountId, amount, description
         );
 
         validateForSufficientFunds(fromAccount, amount);
@@ -63,17 +64,15 @@ public class AccountService {
     }
 
     @Transactional
-    public DepositTransaction depositFunds(UUID toAccountId, BigDecimal amount,
-                                           String description, String depositMethod) {
+    public DepositTransaction depositFunds(UUID initiatorId, UUID toAccountId,
+                                           BigDecimal amount, String description,
+                                           String depositMethod) {
         Account toAccount = accountRepository.findById(toAccountId)
                 .orElseThrow(() -> new AccountNotFoundException(toAccountId));
         validateAccountActive(toAccount);
 
         DepositTransaction transaction = transactionFactory.createDeposit(
-                toAccountId,
-                amount,
-                description,
-                depositMethod
+                initiatorId, toAccountId, amount, description, depositMethod
         );
 
         toAccount.deposit(amount);
@@ -86,17 +85,15 @@ public class AccountService {
     }
 
     @Transactional
-    public WithdrawalTransaction withdrawFunds(UUID fromAccountId, BigDecimal amount,
-                                           String description, String withdrawalLocation) {
+    public WithdrawalTransaction withdrawFunds(UUID initiatorId, UUID fromAccountId,
+                                               BigDecimal amount, String description,
+                                               String withdrawalLocation) {
         Account fromAccount = accountRepository.findById(fromAccountId)
                 .orElseThrow(() -> new AccountNotFoundException(fromAccountId));
         validateAccountActive(fromAccount);
 
         WithdrawalTransaction transaction = transactionFactory.createWithdrawal(
-                fromAccountId,
-                amount,
-                description,
-                withdrawalLocation
+                initiatorId, fromAccountId, amount, description, withdrawalLocation
         );
 
         validateForSufficientFunds(fromAccount, amount);
@@ -111,7 +108,8 @@ public class AccountService {
     }
 
     @Transactional
-    public AccountFreezeEvent freezeAccount(UUID accountToFreeze, String description) {
+    public AccountFreezeEvent freezeAccount(UUID initiatorId, UUID accountToFreeze,
+                                            String description) {
         Account account = accountRepository.findById(accountToFreeze)
                 .orElseThrow(() ->
                         new IllegalArgumentException("Account not found: " + accountToFreeze));
@@ -125,8 +123,8 @@ public class AccountService {
 
         AccountFreezeEvent event = new AccountFreezeEvent(
                 UUID.randomUUID(),
-                accountToFreeze, //плохо и неправильно, тут должен быть id инициатора (актора в системе)
-                //initiatorId
+                accountToFreeze,
+                initiatorId,
                 LocalDateTime.now(),
                 description,
                 ActionType.FREEZE
@@ -138,7 +136,7 @@ public class AccountService {
     }
 
     @Transactional
-    public AccountFreezeEvent unfreezeAccount(UUID accountToUnfreeze, String description) {
+    public AccountFreezeEvent unfreezeAccount(UUID initiatorId, UUID accountToUnfreeze, String description) {
         Account account = accountRepository.findById(accountToUnfreeze)
                 .orElseThrow(() ->
                         new IllegalArgumentException("Account not found: " + accountToUnfreeze));
@@ -153,7 +151,7 @@ public class AccountService {
         AccountFreezeEvent event = new AccountFreezeEvent(
                 UUID.randomUUID(),
                 accountToUnfreeze,
-                //initiatorId
+                initiatorId,
                 LocalDateTime.now(),
                 description,
                 ActionType.UNFREEZE

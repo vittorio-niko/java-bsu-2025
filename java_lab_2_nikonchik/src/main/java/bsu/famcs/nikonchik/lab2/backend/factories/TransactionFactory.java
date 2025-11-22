@@ -13,13 +13,15 @@ import bsu.famcs.nikonchik.lab2.backend.exceptions.AccountExceptions.InvalidAmou
 
 @Component
 public class TransactionFactory {
-    public TransferTransaction createTransfer(UUID fromAccount, UUID toAccount,
-                                              BigDecimal amount, String description) {
+    public TransferTransaction createTransfer(UUID initiatorId, UUID fromAccount,
+                                              UUID toAccount, BigDecimal amount,
+                                              String description) {
         if (amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new InvalidAmountException("Amount must be positive");
         }
         return new TransferTransaction(
                 UUID.randomUUID(),
+                initiatorId,
                 amount,
                 LocalDateTime.now(),
                 TransactionStatus.PENDING,
@@ -29,13 +31,15 @@ public class TransactionFactory {
         );
     }
 
-    public DepositTransaction createDeposit(UUID toAccount, BigDecimal amount,
-                                            String description, String depositMethod) {
+    public DepositTransaction createDeposit(UUID initiatorId, UUID toAccount,
+                                            BigDecimal amount, String description,
+                                            String depositMethod) {
         if (amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new InvalidAmountException("Amount must be positive");
         }
         return new DepositTransaction(
                 UUID.randomUUID(),
+                initiatorId,
                 amount,
                 LocalDateTime.now(),
                 TransactionStatus.PENDING,
@@ -45,13 +49,15 @@ public class TransactionFactory {
         );
     }
 
-    public WithdrawalTransaction createWithdrawal(UUID fromAccount, BigDecimal amount,
-                                                  String description, String location) {
+    public WithdrawalTransaction createWithdrawal(UUID initiatorId, UUID fromAccount,
+                                                  BigDecimal amount, String description,
+                                                  String location) {
         if (amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new InvalidAmountException("Amount must be positive");
         }
         return new WithdrawalTransaction(
                 UUID.randomUUID(),
+                initiatorId,
                 amount,
                 LocalDateTime.now(),
                 TransactionStatus.PENDING,

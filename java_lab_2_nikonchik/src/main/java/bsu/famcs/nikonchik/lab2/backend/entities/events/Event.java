@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-//Унаследовать от этого класса все events!!!
 @MappedSuperclass
 public abstract class Event implements Serializable, Comparable<Event> {
     private static final long serialVersionUID = 42L;

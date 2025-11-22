@@ -21,10 +21,11 @@ public class WithdrawalTransaction extends Transaction {
         this.withdrawalLocation = null;
     }
 
-    public WithdrawalTransaction(UUID id, BigDecimal amount, LocalDateTime timestamp,
+    public WithdrawalTransaction(UUID id, UUID initiatorId,
+                                 BigDecimal amount, LocalDateTime timestamp,
                                  TransactionStatus status, String description,
                                  UUID fromAccount, String withdrawalLocation) {
-        super(id, amount, timestamp, status, description);
+        super(id, initiatorId, amount, timestamp, status, description);
         this.fromAccount = Objects.requireNonNull(fromAccount, "From account cannot be null");
         this.withdrawalLocation = withdrawalLocation;
     }
@@ -32,7 +33,7 @@ public class WithdrawalTransaction extends Transaction {
     @Override
     public String toString() {
         return String.format("WithdrawalTransaction{id='%s', amount=%s, fromAccount='%s', location='%s'}",
-                id, amount, fromAccount, withdrawalLocation);
+                initiatorId, amount, fromAccount, withdrawalLocation);
     }
 
     public UUID getFromAccount() { return fromAccount; }

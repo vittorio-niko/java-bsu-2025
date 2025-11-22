@@ -5,31 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4695db4-b485-4969-8a24-ed1f6316902e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/moneyflowcommands/DepositCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/moneyflowcommands/MoneyFlowCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/moneyflowcommands/WithdrawalCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/policies/DepositCommandPolicy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/policies/WithdrawalCommandPolicy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/Event.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/DepositTransaction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/Transaction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/TransferTransaction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/WithdrawalTransaction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/logs/MoneyFlowErrorLog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/logs/EventErrorLog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/Command.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/FreezeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/productconditioncommands/FreezeCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/TransferCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/moneyflowcommands/TransferCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/UnfreezeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/productconditioncommands/UnfreezeCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/policies/FreezeCommandPolicy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/policies/FreezeCommandPolicy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/policies/TransferCommandPolicy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/policies/TransferCommandPolicy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/policies/UnfreezeCommandPolicy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/policies/UnfreezeCommandPolicy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/actors/Actor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/actors/Actor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/actors/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/actors/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/AccountFreezeEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/lifecycleevents/AccountFreezeEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/Transaction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/moneyflowcommands/DepositCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/moneyflowcommands/DepositCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/moneyflowcommands/TransferCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/moneyflowcommands/TransferCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/moneyflowcommands/WithdrawalCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/moneyflowcommands/WithdrawalCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/productconditioncommands/FreezeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/productconditioncommands/FreezeCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/productconditioncommands/UnfreezeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/commands/productconditioncommands/UnfreezeCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/Event.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/lifecycleevents/AccountFreezeEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/lifecycleevents/AccountFreezeEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/DepositTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/DepositTransaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/Transaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/TransferTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/TransferTransaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/WithdrawalTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/WithdrawalTransaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/logs/MoneyFlowErrorLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/logs/moneyflowerrorlogs/MoneyFlowErrorLog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/factories/TransactionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/factories/TransactionFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/repositories/AccountFreezeActionsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/repositories/AccountFreezeActionsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/repositories/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/repositories/AccountRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/repositories/TransactionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/repositories/TransactionRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/services/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/services/AccountService.java" afterDir="false" />
     </list>
@@ -83,13 +74,10 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
-      </set>
-    </attachedChunks>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\expo0\java-bsu-2025\java_lab_2_nikonchik\src\main\java\bsu\famcs\nikonchik\lab2\backend\entities\logs\moneyflowerrorlogs" />
+    </key>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

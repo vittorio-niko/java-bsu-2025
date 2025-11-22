@@ -25,9 +25,9 @@ public class TransferCommand extends MoneyFlowCommand {
     public void execute() {
         try {
             Transaction transaction = accountService.transferFunds(
-                    fromAccountId, toAccountId, amount, description
+                    initiatorId, fromAccountId, toAccountId, amount, description
             );
-            this.transactionId = transaction.getId();
+            this.transactionId = transaction.getEventId();
             this.status = CommandStatus.EXECUTED;
         } catch (Exception e) {
             this.status = CommandStatus.FAILED;

@@ -1,11 +1,4 @@
-package bsu.famcs.nikonchik.lab2.backend.entities.logs;
-
-import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.UUID;
-import java.math.BigDecimal;
-import java.util.Objects;
+package bsu.famcs.nikonchik.lab2.backend.entities.logs.moneyflowerrorlogs;
 
 //@Entity
 //@Table(name = "transaction_failure_details")

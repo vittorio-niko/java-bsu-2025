@@ -9,10 +9,10 @@ import java.util.Objects;
 @Entity
 @DiscriminatorValue("TRANSFER")
 public class TransferTransaction extends Transaction {
-    @Column(name = "from_account_id", updatable = false)
+    @Column(name = "from_account_id", nullable = false, updatable = false)
     private final UUID fromAccount;
 
-    @Column(name = "to_account_id", updatable = false)
+    @Column(name = "to_account_id", nullable = false, updatable = false)
     private final UUID toAccount;
 
     protected TransferTransaction() {
@@ -21,10 +21,11 @@ public class TransferTransaction extends Transaction {
         this.toAccount = null;
     }
 
-    public TransferTransaction(UUID id, BigDecimal amount, LocalDateTime timestamp,
+    public TransferTransaction(UUID eventId, UUID initiatorId,
+                               BigDecimal amount, LocalDateTime timestamp,
                                TransactionStatus status, String description,
                                UUID fromAccount, UUID toAccount) {
-        super(id, amount, timestamp, status, description);
+        super(eventId, initiatorId, amount, timestamp, status, description);
         this.fromAccount = Objects.requireNonNull(fromAccount, "From account cannot be null");
         this.toAccount = Objects.requireNonNull(toAccount, "To account cannot be null");
     }
@@ -32,7 +33,7 @@ public class TransferTransaction extends Transaction {
     @Override
     public String toString() {
         return String.format("TransferTransaction{id='%s', amount=%s, fromAccount='%s', toAccount='%s'}",
-                id, amount, fromAccount, toAccount);
+                eventId, amount, fromAccount, toAccount);
     }
 
     public UUID getFromAccount() { return fromAccount; }

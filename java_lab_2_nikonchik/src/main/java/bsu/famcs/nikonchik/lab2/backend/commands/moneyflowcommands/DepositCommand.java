@@ -25,9 +25,9 @@ public class DepositCommand extends MoneyFlowCommand {
     public void execute() {
         try {
             DepositTransaction transaction = accountService.depositFunds(
-                    toAccountId, amount, description, depositMethod
+                    initiatorId, toAccountId, amount, description, depositMethod
             );
-            this.transactionId = transaction.getId();
+            this.transactionId = transaction.getEventId();
             this.status = CommandStatus.EXECUTED;
         } catch (Exception e) {
             this.status = CommandStatus.FAILED;

@@ -25,9 +25,9 @@ public class WithdrawalCommand extends MoneyFlowCommand {
     public void execute() {
         try {
             WithdrawalTransaction transaction = accountService.withdrawFunds(
-                    fromAccountId, amount, description, withdrawalLocation
+                    initiatorId, fromAccountId, amount, description, withdrawalLocation
             );
-            this.transactionId = transaction.getId();
+            this.transactionId = transaction.getEventId();
             this.status = CommandStatus.EXECUTED;
         } catch (Exception e) {
             this.status = CommandStatus.FAILED;
