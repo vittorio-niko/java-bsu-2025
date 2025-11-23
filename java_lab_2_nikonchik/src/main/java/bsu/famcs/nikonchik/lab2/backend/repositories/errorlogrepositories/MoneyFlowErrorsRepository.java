@@ -9,7 +9,7 @@ import bsu.famcs.nikonchik.lab2.backend.entities.logs.moneyflowerrorlogs.MoneyFl
 
 public interface MoneyFlowErrorsRepository extends
         JpaRepository<MoneyFlowErrorLog, UUID> {
-    Optional<MoneyFlowErrorLog> findByAccountId(UUID accountId);
+    Optional<MoneyFlowErrorLog> findByInitiatorId(UUID initiatorId);
     Optional<MoneyFlowErrorLog> findByEventId(UUID eventId);
     List<MoneyFlowErrorLog> findByTransactionType(String transactionType);
 }

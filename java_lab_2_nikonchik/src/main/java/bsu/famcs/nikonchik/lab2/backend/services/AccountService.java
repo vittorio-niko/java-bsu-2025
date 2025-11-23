@@ -8,6 +8,9 @@ import bsu.famcs.nikonchik.lab2.backend.entities.logs.moneyflowerrorlogs.MoneyFl
 import bsu.famcs.nikonchik.lab2.backend.factories.LifecycleEventsFactory;
 import bsu.famcs.nikonchik.lab2.backend.repositories.errorlogrepositories.LifecycleErrorsRepository;
 import bsu.famcs.nikonchik.lab2.backend.repositories.errorlogrepositories.MoneyFlowErrorsRepository;
+import bsu.famcs.nikonchik.lab2.backend.repositories.eventsrepositories.AccountFreezeActionsRepository;
+import bsu.famcs.nikonchik.lab2.backend.repositories.eventsrepositories.TransactionRepository;
+import bsu.famcs.nikonchik.lab2.backend.repositories.productrepositories.AccountRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +21,6 @@ import bsu.famcs.nikonchik.lab2.backend.entities.products.Account;
 import bsu.famcs.nikonchik.lab2.backend.exceptions.AccountExceptions.*;
 import bsu.famcs.nikonchik.lab2.backend.entities.events.lifecycleevents.AccountFreezeEvent;
 import bsu.famcs.nikonchik.lab2.backend.entities.events.lifecycleevents.AccountFreezeEvent.ActionType;
-import bsu.famcs.nikonchik.lab2.backend.repositories.*;
 
 @Service
 public class AccountService {

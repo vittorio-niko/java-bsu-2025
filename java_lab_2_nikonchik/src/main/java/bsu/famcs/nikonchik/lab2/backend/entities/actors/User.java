@@ -17,8 +17,6 @@ import java.util.UUID;
 
 //проверить все аннотации спринга
 
-//доделать лог классы
-
 @Entity
 @Table(name = "users")
 public class User extends Actor implements Comparable<User> {

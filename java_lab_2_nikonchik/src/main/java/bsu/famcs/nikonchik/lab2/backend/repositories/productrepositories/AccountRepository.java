@@ -1,4 +1,4 @@
-package bsu.famcs.nikonchik.lab2.backend.repositories;
+package bsu.famcs.nikonchik.lab2.backend.repositories.productrepositories;
 
 import bsu.famcs.nikonchik.lab2.backend.entities.products.Account;
 import bsu.famcs.nikonchik.lab2.backend.entities.products.Account.AccountStatus;

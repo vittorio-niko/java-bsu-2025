@@ -17,14 +17,10 @@ public abstract class EventErrorLog implements Serializable,
     @Column(name = "log_id", nullable = false, unique = true, updatable = false)
     protected final UUID logId;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id", referencedColumnName = "event_id",
-            insertable = false, updatable = false)
+    @Column(name = "event_id", nullable = false, unique = true, updatable = false)
     protected final UUID eventId;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "initiator_id", referencedColumnName = "initiator_id",
-            insertable = false, updatable = false)
+    @Column(name = "initiator_id", nullable = false, unique = true, updatable = false)
     protected final UUID initiatorId;
 
     @Column(name = "failed_at", nullable = false)

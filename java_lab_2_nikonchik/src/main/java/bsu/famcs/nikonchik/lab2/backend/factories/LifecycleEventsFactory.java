@@ -11,7 +11,7 @@ import java.util.UUID;
 @Component
 public class LifecycleEventsFactory {
     public AccountFreezeEvent createAccountFreezeEvent(UUID accountId, UUID initiatorId,
-                                                       String description, ActionType actionType) {
+                                                              String description, ActionType actionType) {
         return new AccountFreezeEvent(
                 UUID.randomUUID(),
                 accountId,

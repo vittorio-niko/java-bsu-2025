@@ -1,4 +1,4 @@
-package bsu.famcs.nikonchik.lab2.backend.repositories;
+package bsu.famcs.nikonchik.lab2.backend.repositories.eventsrepositories;
 
 import bsu.famcs.nikonchik.lab2.backend.entities.events.moneyflowevents.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;

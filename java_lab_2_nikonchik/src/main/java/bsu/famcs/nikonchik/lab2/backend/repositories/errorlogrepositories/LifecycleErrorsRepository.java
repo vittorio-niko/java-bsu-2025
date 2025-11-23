@@ -9,7 +9,7 @@ import bsu.famcs.nikonchik.lab2.backend.entities.logs.lifecycleerrorlogs.FreezeE
 
 public interface LifecycleErrorsRepository extends
         JpaRepository<FreezeErrorLog, UUID> {
-    Optional<FreezeErrorLog> findByAccountId(UUID accountId);
+    Optional<FreezeErrorLog> findByInitiatorId(UUID initiatorId);
     Optional<FreezeErrorLog> findByEventId(UUID eventId);
     List<FreezeErrorLog> findByActionType(String actionType);
 }
