@@ -30,6 +30,9 @@ public class Account extends Product implements Comparable<Account> {
     @Column(name = "account_name", length = 100)
     private String accountName;
 
+    @Version
+    private Long version;
+
     protected Account() {
         super();
         this.accountNumber = null;

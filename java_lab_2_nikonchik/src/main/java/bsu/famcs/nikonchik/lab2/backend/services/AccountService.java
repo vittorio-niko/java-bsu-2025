@@ -2,6 +2,7 @@ package bsu.famcs.nikonchik.lab2.backend.services;
 
 import java.util.UUID;
 import java.math.BigDecimal;
+import javax.persistence.OptimisticLockException;
 
 import bsu.famcs.nikonchik.lab2.backend.entities.logs.lifecycleerrorlogs.FreezeErrorLog;
 import bsu.famcs.nikonchik.lab2.backend.entities.logs.moneyflowerrorlogs.MoneyFlowErrorLog;
@@ -56,111 +57,149 @@ public class AccountService {
     public TransferTransaction transferFunds(UUID initiatorId, UUID fromAccountId,
                                              UUID toAccountId, BigDecimal amount,
                                              String description) {
-        Account fromAccount = accountRepository.findById(fromAccountId)
-                .orElseThrow(() -> new AccountNotFoundException(fromAccountId));
-        Account toAccount = accountRepository.findById(toAccountId)
-                .orElseThrow(() -> new AccountNotFoundException(toAccountId));
-
+        final int MAX_RETRIES = 3;
+        int attempt = 0;
         TransferTransaction transaction = transactionFactory.createTransfer(
                 initiatorId, fromAccountId, toAccountId, amount, description
         );
 
-        try {
-            validateAccountActive(fromAccount);
-            validateAccountActive(toAccount);
-            validateForSufficientFunds(fromAccount, amount);
+        while (attempt < MAX_RETRIES) {
+            attempt++;
+            try {
+                Account fromAccount = accountRepository.findById(fromAccountId)
+                        .orElseThrow(() -> new AccountNotFoundException(fromAccountId));
+                Account toAccount = accountRepository.findById(toAccountId)
+                        .orElseThrow(() -> new AccountNotFoundException(toAccountId));
 
-            fromAccount.withdraw(amount);
-            toAccount.deposit(amount);
-            transaction.setCompleted();
+                validateAccountActive(fromAccount);
+                validateAccountActive(toAccount);
+                validateForSufficientFunds(fromAccount, amount);
 
-            accountRepository.save(fromAccount);
-            accountRepository.save(toAccount);
-            transactionRepository.save(transaction);
-        } catch (Exception e) {
-            transaction.setFailed(e);
-            transactionRepository.save(transaction);
+                fromAccount.withdraw(amount);
+                toAccount.deposit(amount);
+                transaction.setCompleted();
 
-            MoneyFlowErrorLog errorLog = eventErrorLogFactory.createMoneyFlowErrorLog(
-                    transaction, e
-            );
-            moneyFlowErrorsRepository.save(errorLog);
-        } finally {
-            return transaction;
+                accountRepository.save(fromAccount);
+                accountRepository.save(toAccount);
+                transactionRepository.save(transaction);
+
+                return transaction;
+            } catch (OptimisticLockException e) {
+                if (attempt == MAX_RETRIES) {
+                    transaction.setFailed(e);
+                    transactionRepository.save(transaction);
+                    logMoneyFlowError(transaction, e);
+                    return transaction;
+                }
+
+            } catch (Exception e) {
+                transaction.setFailed(e);
+                transactionRepository.save(transaction);
+                logMoneyFlowError(transaction, e);
+                return transaction;
+            }
         }
+
+        return transaction;
     }
 
     @Transactional
     public DepositTransaction depositFunds(UUID initiatorId, UUID toAccountId,
                                            BigDecimal amount, String description,
                                            String depositMethod) {
-        Account toAccount = accountRepository.findById(toAccountId)
-                .orElseThrow(() -> new AccountNotFoundException(toAccountId));
+        final int MAX_RETRIES = 3;
+        int attempt = 0;
 
         DepositTransaction transaction = transactionFactory.createDeposit(
                 initiatorId, toAccountId, amount, description, depositMethod
         );
 
-        try {
-            validateAccountActive(toAccount);
-            toAccount.deposit(amount);
+        while (attempt < MAX_RETRIES) {
+            attempt++;
+            try {
+                Account toAccount = accountRepository.findById(toAccountId)
+                        .orElseThrow(() -> new AccountNotFoundException(toAccountId));
 
-            transaction.setCompleted();
+                validateAccountActive(toAccount);
 
-            accountRepository.save(toAccount);
-            transactionRepository.save(transaction);
-        } catch (Exception e) {
-            transaction.setFailed(e);
-            transactionRepository.save(transaction);
+                toAccount.deposit(amount);
+                transaction.setCompleted();
 
-            MoneyFlowErrorLog errorLog = eventErrorLogFactory.createMoneyFlowErrorLog(
-                    transaction, e
-            );
-            moneyFlowErrorsRepository.save(errorLog);
-        } finally {
-            return transaction;
+                accountRepository.save(toAccount);
+                transactionRepository.save(transaction);
+
+                return transaction;
+
+            } catch (OptimisticLockException e) {
+                if (attempt == MAX_RETRIES) {
+                    transaction.setFailed(e);
+                    transactionRepository.save(transaction);
+                    logMoneyFlowError(transaction, e);
+                    return transaction;
+                }
+
+            } catch (Exception e) {
+                transaction.setFailed(e);
+                transactionRepository.save(transaction);
+                logMoneyFlowError(transaction, e);
+                return transaction;
+            }
         }
+
+        return transaction;
     }
 
     @Transactional
     public WithdrawalTransaction withdrawFunds(UUID initiatorId, UUID fromAccountId,
                                                BigDecimal amount, String description,
                                                String withdrawalLocation) {
-        Account fromAccount = accountRepository.findById(fromAccountId)
-                .orElseThrow(() -> new AccountNotFoundException(fromAccountId));
+        final int MAX_RETRIES = 3;
+        int attempt = 0;
 
         WithdrawalTransaction transaction = transactionFactory.createWithdrawal(
                 initiatorId, fromAccountId, amount, description, withdrawalLocation
         );
 
-        try {
-            validateAccountActive(fromAccount);
-            validateForSufficientFunds(fromAccount, amount);
+        while (attempt < MAX_RETRIES) {
+            attempt++;
+            try {
+                Account fromAccount = accountRepository.findById(fromAccountId)
+                        .orElseThrow(() -> new AccountNotFoundException(fromAccountId));
 
-            fromAccount.withdraw(amount);
-            transaction.setCompleted();
+                validateAccountActive(fromAccount);
+                validateForSufficientFunds(fromAccount, amount);
 
-            accountRepository.save(fromAccount);
-            transactionRepository.save(transaction);
-        } catch (Exception e) {
-            transaction.setFailed(e);
-            transactionRepository.save(transaction);
+                fromAccount.withdraw(amount);
+                transaction.setCompleted();
 
-            MoneyFlowErrorLog errorLog = eventErrorLogFactory.createMoneyFlowErrorLog(
-                    transaction, e
-            );
-            moneyFlowErrorsRepository.save(errorLog);
-        } finally {
-            return transaction;
+                accountRepository.save(fromAccount);
+                transactionRepository.save(transaction);
+
+                return transaction;
+            } catch (OptimisticLockException e) {
+                if (attempt == MAX_RETRIES) {
+                    transaction.setFailed(e);
+                    transactionRepository.save(transaction);
+                    logMoneyFlowError(transaction, e);
+                    return transaction;
+                }
+
+            } catch (Exception e) {
+                transaction.setFailed(e);
+                transactionRepository.save(transaction);
+                logMoneyFlowError(transaction, e);
+                return transaction;
+            }
         }
+
+        return transaction;
     }
 
     @Transactional
     public AccountFreezeEvent freezeAccount(UUID initiatorId, UUID accountToFreeze,
                                             String description) {
-        Account account = accountRepository.findById(accountToFreeze)
-                .orElseThrow(() ->
-                        new IllegalArgumentException("Account not found: " + accountToFreeze));
+        final int MAX_RETRIES = 3;
+        int attempt = 0;
 
         AccountFreezeEvent event = lifecycleEventsFactory.createAccountFreezeEvent(
                 accountToFreeze,
@@ -169,34 +208,49 @@ public class AccountService {
                 ActionType.FREEZE
         );
 
-        try {
-            if (account.isFrozen()) {
-                throw new IllegalStateException("Account is already frozen: " + accountToFreeze);
+        while (attempt < MAX_RETRIES) {
+            attempt++;
+            try {
+                Account account = accountRepository.findById(accountToFreeze)
+                        .orElseThrow(() ->
+                                new IllegalArgumentException("Account not found: " + accountToFreeze));
+
+                if (account.isFrozen()) {
+                    throw new IllegalStateException("Account is already frozen: " + accountToFreeze);
+                }
+
+                account.freeze();
+                event.setCompleted();
+
+                accountRepository.save(account);
+                accountFreezeActionsRepository.save(event);
+
+                return event;
+            } catch (OptimisticLockException e) {
+                if (attempt == MAX_RETRIES) {
+                    event.setFailed(e);
+                    accountFreezeActionsRepository.save(event);
+                    logFreezeError(event, e);
+                    return event;
+                }
+
+            } catch (Exception e) {
+                event.setFailed(e);
+                accountFreezeActionsRepository.save(event);
+                logFreezeError(event, e);
+                return event;
             }
-
-            account.freeze();
-            event.setCompleted();
-
-            accountRepository.save(account);
-            accountFreezeActionsRepository.save(event);
-        } catch (Exception e) {
-            event.setFailed(e);
-            accountFreezeActionsRepository.save(event);
-
-            FreezeErrorLog errorLog = eventErrorLogFactory.createFreezeErrorLog(
-                    event, e
-            );
-            lifecycleErrorsRepository.save(errorLog);
-        } finally {
-            return event;
         }
+
+        return event;
     }
 
+
     @Transactional
-    public AccountFreezeEvent unfreezeAccount(UUID initiatorId, UUID accountToUnfreeze, String description) {
-        Account account = accountRepository.findById(accountToUnfreeze)
-                .orElseThrow(() ->
-                        new IllegalArgumentException("Account not found: " + accountToUnfreeze));
+    public AccountFreezeEvent unfreezeAccount(UUID initiatorId, UUID accountToUnfreeze,
+                                              String description) {
+        final int MAX_RETRIES = 3;
+        int attempt = 0;
 
         AccountFreezeEvent event = lifecycleEventsFactory.createAccountFreezeEvent(
                 accountToUnfreeze,
@@ -204,26 +258,42 @@ public class AccountService {
                 description,
                 ActionType.UNFREEZE
         );
-        try {
-            if (account.isActive()) {
-                throw new IllegalStateException("Account is already active: " + accountToUnfreeze);
+
+        while (attempt < MAX_RETRIES) {
+            attempt++;
+            try {
+                Account account = accountRepository.findById(accountToUnfreeze)
+                        .orElseThrow(() ->
+                                new IllegalArgumentException("Account not found: " + accountToUnfreeze));
+
+                if (account.isActive()) {
+                    throw new IllegalStateException("Account is already active: " + accountToUnfreeze);
+                }
+
+                account.activate();
+                event.setCompleted();
+
+                accountRepository.save(account);
+                accountFreezeActionsRepository.save(event);
+
+                return event;
+            } catch (OptimisticLockException e) {
+                if (attempt == MAX_RETRIES) {
+                    event.setFailed(e);
+                    accountFreezeActionsRepository.save(event);
+                    logFreezeError(event, e);
+                    return event;
+                }
+
+            } catch (Exception e) {
+                event.setFailed(e);
+                accountFreezeActionsRepository.save(event);
+                logFreezeError(event, e);
+                return event;
             }
-            account.activate();
-            event.setCompleted();
-
-            accountRepository.save(account);
-            accountFreezeActionsRepository.save(event);
-        } catch (Exception e) {
-            event.setFailed(e);
-            accountFreezeActionsRepository.save(event);
-
-            FreezeErrorLog errorLog = eventErrorLogFactory.createFreezeErrorLog(
-                    event, e
-            );
-            lifecycleErrorsRepository.save(errorLog);
-        } finally {
-            return event;
         }
+
+        return event;
     }
 
     private void validateForSufficientFunds(Account fromAccount, BigDecimal amount) {
@@ -237,6 +307,21 @@ public class AccountService {
             throw new AccountNotActiveException(account.getAccountNumber(),
                     account.getStatus().toString());
         }
+    }
+
+    private void logMoneyFlowError(Transaction transaction,
+                                   Exception e) {
+        MoneyFlowErrorLog errorLog = eventErrorLogFactory.createMoneyFlowErrorLog(
+                transaction, e
+        );
+        moneyFlowErrorsRepository.save(errorLog);
+    }
+
+    private void logFreezeError(AccountFreezeEvent event, Exception e) {
+        FreezeErrorLog errorLog = eventErrorLogFactory.createFreezeErrorLog(
+                event, e
+        );
+        lifecycleErrorsRepository.save(errorLog);
     }
 }
 
