@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b4695db4-b485-4969-8a24-ed1f6316902e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/answers.txt" beforeDir="false" afterPath="$PROJECT_DIR$/answers.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/products/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/products/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/services/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/services/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/actors/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/actors/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

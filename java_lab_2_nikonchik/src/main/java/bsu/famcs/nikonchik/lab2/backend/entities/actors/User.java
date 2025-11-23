@@ -6,17 +6,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-//TODO:
-
-//сделать фабрики команд, entity классов
-//1.1) наладить связь с бд
-//написать ответы на вопросы
-//добавить корректное сохранение данных в бд
-//накатить асинхронность на слой CommandHandler, возможно
-//добавить блокировки в классы репозиториев для решения race conditions
-
-//проверить все аннотации спринга
-
 @Entity
 @Table(name = "users")
 public class User extends Actor implements Comparable<User> {
