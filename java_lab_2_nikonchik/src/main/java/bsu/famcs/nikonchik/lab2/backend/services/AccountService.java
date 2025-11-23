@@ -4,10 +4,11 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 import java.math.BigDecimal;
 
-import bsu.famcs.nikonchik.lab2.backend.factories.TransactionFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import bsu.famcs.nikonchik.lab2.backend.factories.EventErrorLogFactory;
+import bsu.famcs.nikonchik.lab2.backend.factories.TransactionFactory;
 import bsu.famcs.nikonchik.lab2.backend.entities.events.moneyflowevents.*;
 import bsu.famcs.nikonchik.lab2.backend.entities.events.moneyflowevents.Transaction.TransactionStatus;
 import bsu.famcs.nikonchik.lab2.backend.entities.products.Account;
@@ -21,17 +22,26 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
     private final AccountFreezeActionsRepository accountFreezeActionsRepository;
+    private final MoneyFlowErrorsRepository moneyFlowErrorsRepository;
+    private final LifecycleErrorsRepository lifecycleErrorsRepository;
 
     private final TransactionFactory transactionFactory;
+    private final EventErrorLogFactory eventErrorLogFactory;
 
     public AccountService(AccountRepository accountRepository,
                           TransactionRepository transactionRepository,
                           AccountFreezeActionsRepository accountFreezeActionsRepository,
-                          TransactionFactory transactionFactory) {
+                          MoneyFlowErrorsRepository moneyFlowErrorsRepository,
+                          LifecycleErrorsRepository lifecycleErrorsRepository,
+                          TransactionFactory transactionFactory,
+                          EventErrorLogFactory eventErrorLogFactory) {
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
         this.accountFreezeActionsRepository = accountFreezeActionsRepository;
+        this.moneyFlowErrorsRepository = moneyFlowErrorsRepository;
+        this.lifecycleErrorsRepository = lifecycleErrorsRepository;
         this.transactionFactory = transactionFactory;
+        this.eventErrorLogFactory = eventErrorLogFactory;
     }
 
     @Transactional
