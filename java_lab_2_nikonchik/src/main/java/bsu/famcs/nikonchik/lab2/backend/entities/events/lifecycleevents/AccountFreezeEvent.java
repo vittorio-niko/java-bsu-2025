@@ -27,9 +27,9 @@ public class AccountFreezeEvent extends Event {
     }
 
     public AccountFreezeEvent(UUID eventId, UUID accountId, UUID initiatorId,
-                              LocalDateTime timestamp, String description,
-                              ActionType actionType) {
-        super(eventId, initiatorId, timestamp, description);
+                              LocalDateTime timestamp, EventStatus status,
+                              String description, ActionType actionType) {
+        super(eventId, initiatorId, timestamp, status, description);
         this.accountId = Objects.requireNonNull(accountId,
                 "Account cannot be null");
         this.actionType = Objects.requireNonNull(actionType,

@@ -23,7 +23,7 @@ public class TransferTransaction extends Transaction {
 
     public TransferTransaction(UUID eventId, UUID initiatorId,
                                BigDecimal amount, LocalDateTime timestamp,
-                               TransactionStatus status, String description,
+                               EventStatus status, String description,
                                UUID fromAccount, UUID toAccount) {
         super(eventId, initiatorId, amount, timestamp, status, description);
         this.fromAccount = Objects.requireNonNull(fromAccount, "From account cannot be null");

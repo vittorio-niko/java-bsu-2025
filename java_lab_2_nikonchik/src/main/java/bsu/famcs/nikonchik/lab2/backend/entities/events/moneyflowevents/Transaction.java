@@ -18,28 +18,19 @@ public abstract class Transaction extends Event {
     @Column(name = "amount", nullable = false, updatable = false, precision = 15, scale = 2)
     protected final BigDecimal amount;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false, length = 20)
-    protected TransactionStatus status;
-
     protected Transaction() {
         super();
         this.amount = null;
         this.status = null;
+        this.failureReason = null;
     }
 
     protected Transaction(UUID eventId, UUID initiatorId,
                           BigDecimal amount, LocalDateTime timestamp,
-                          TransactionStatus status, String description) {
-        super(eventId, initiatorId, timestamp, description);
+                          EventStatus status, String description) {
+        super(eventId, initiatorId, timestamp, status, description);
         this.amount = Objects.requireNonNull(amount,
                 "Transaction amount cannot be null");
-        this.status = Objects.requireNonNull(status,
-                "Transaction status cannot be null");
-    }
-
-    public enum TransactionStatus {
-        PENDING, COMPLETED, UNDONE, FAILED
     }
 
     @Override
@@ -49,9 +40,4 @@ public abstract class Transaction extends Event {
     }
 
     public BigDecimal getAmount() { return amount; }
-    public TransactionStatus getStatus() { return status; }
-
-    public void setStatus(TransactionStatus status) {
-        this.status = Objects.requireNonNull(status);
-    }
 }

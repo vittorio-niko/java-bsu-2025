@@ -23,7 +23,7 @@ public class DepositTransaction extends Transaction {
 
     public DepositTransaction(UUID id, UUID initiatorId,
                               BigDecimal amount, LocalDateTime timestamp,
-                              TransactionStatus status, String description,
+                              EventStatus status, String description,
                               UUID toAccount, String depositMethod) {
         super(id, initiatorId, amount, timestamp, status, description);
         this.toAccount = Objects.requireNonNull(toAccount,

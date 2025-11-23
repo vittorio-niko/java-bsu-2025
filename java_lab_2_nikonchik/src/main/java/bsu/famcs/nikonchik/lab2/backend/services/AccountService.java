@@ -1,16 +1,19 @@
 package bsu.famcs.nikonchik.lab2.backend.services;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 import java.math.BigDecimal;
 
+import bsu.famcs.nikonchik.lab2.backend.entities.logs.lifecycleerrorlogs.FreezeErrorLog;
+import bsu.famcs.nikonchik.lab2.backend.entities.logs.moneyflowerrorlogs.MoneyFlowErrorLog;
+import bsu.famcs.nikonchik.lab2.backend.factories.LifecycleEventsFactory;
+import bsu.famcs.nikonchik.lab2.backend.repositories.errorlogrepositories.LifecycleErrorsRepository;
+import bsu.famcs.nikonchik.lab2.backend.repositories.errorlogrepositories.MoneyFlowErrorsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import bsu.famcs.nikonchik.lab2.backend.factories.EventErrorLogFactory;
 import bsu.famcs.nikonchik.lab2.backend.factories.TransactionFactory;
 import bsu.famcs.nikonchik.lab2.backend.entities.events.moneyflowevents.*;
-import bsu.famcs.nikonchik.lab2.backend.entities.events.moneyflowevents.Transaction.TransactionStatus;
 import bsu.famcs.nikonchik.lab2.backend.entities.products.Account;
 import bsu.famcs.nikonchik.lab2.backend.exceptions.AccountExceptions.*;
 import bsu.famcs.nikonchik.lab2.backend.entities.events.lifecycleevents.AccountFreezeEvent;
@@ -27,6 +30,7 @@ public class AccountService {
 
     private final TransactionFactory transactionFactory;
     private final EventErrorLogFactory eventErrorLogFactory;
+    private final LifecycleEventsFactory lifecycleEventsFactory;
 
     public AccountService(AccountRepository accountRepository,
                           TransactionRepository transactionRepository,
@@ -34,7 +38,8 @@ public class AccountService {
                           MoneyFlowErrorsRepository moneyFlowErrorsRepository,
                           LifecycleErrorsRepository lifecycleErrorsRepository,
                           TransactionFactory transactionFactory,
-                          EventErrorLogFactory eventErrorLogFactory) {
+                          EventErrorLogFactory eventErrorLogFactory,
+                          LifecycleEventsFactory lifecycleEventsFactory) {
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
         this.accountFreezeActionsRepository = accountFreezeActionsRepository;
@@ -42,6 +47,7 @@ public class AccountService {
         this.lifecycleErrorsRepository = lifecycleErrorsRepository;
         this.transactionFactory = transactionFactory;
         this.eventErrorLogFactory = eventErrorLogFactory;
+        this.lifecycleEventsFactory = lifecycleEventsFactory;
     }
 
     @Transactional
@@ -50,27 +56,36 @@ public class AccountService {
                                              String description) {
         Account fromAccount = accountRepository.findById(fromAccountId)
                 .orElseThrow(() -> new AccountNotFoundException(fromAccountId));
-        validateAccountActive(fromAccount);
-
         Account toAccount = accountRepository.findById(toAccountId)
                 .orElseThrow(() -> new AccountNotFoundException(toAccountId));
-        validateAccountActive(toAccount);
 
         TransferTransaction transaction = transactionFactory.createTransfer(
                 initiatorId, fromAccountId, toAccountId, amount, description
         );
 
-        validateForSufficientFunds(fromAccount, amount);
+        try {
+            validateAccountActive(fromAccount);
+            validateAccountActive(toAccount);
+            validateForSufficientFunds(fromAccount, amount);
 
-        fromAccount.withdraw(amount);
-        toAccount.deposit(amount);
-        transaction.setStatus(TransactionStatus.COMPLETED);
+            fromAccount.withdraw(amount);
+            toAccount.deposit(amount);
+            transaction.setCompleted();
 
-        accountRepository.save(fromAccount);
-        accountRepository.save(toAccount);
-        transactionRepository.save(transaction);
+            accountRepository.save(fromAccount);
+            accountRepository.save(toAccount);
+            transactionRepository.save(transaction);
+        } catch (Exception e) {
+            transaction.setFailed(e);
+            transactionRepository.save(transaction);
 
-        return transaction;
+            MoneyFlowErrorLog errorLog = eventErrorLogFactory.createMoneyFlowErrorLog(
+                    transaction, e
+            );
+            moneyFlowErrorsRepository.save(errorLog);
+        } finally {
+            return transaction;
+        }
     }
 
     @Transactional
@@ -79,19 +94,30 @@ public class AccountService {
                                            String depositMethod) {
         Account toAccount = accountRepository.findById(toAccountId)
                 .orElseThrow(() -> new AccountNotFoundException(toAccountId));
-        validateAccountActive(toAccount);
 
         DepositTransaction transaction = transactionFactory.createDeposit(
                 initiatorId, toAccountId, amount, description, depositMethod
         );
 
-        toAccount.deposit(amount);
-        transaction.setStatus(TransactionStatus.COMPLETED);
+        try {
+            validateAccountActive(toAccount);
+            toAccount.deposit(amount);
 
-        accountRepository.save(toAccount);
-        transactionRepository.save(transaction);
+            transaction.setCompleted();
 
-        return transaction;
+            accountRepository.save(toAccount);
+            transactionRepository.save(transaction);
+        } catch (Exception e) {
+            transaction.setFailed(e);
+            transactionRepository.save(transaction);
+
+            MoneyFlowErrorLog errorLog = eventErrorLogFactory.createMoneyFlowErrorLog(
+                    transaction, e
+            );
+            moneyFlowErrorsRepository.save(errorLog);
+        } finally {
+            return transaction;
+        }
     }
 
     @Transactional
@@ -100,21 +126,31 @@ public class AccountService {
                                                String withdrawalLocation) {
         Account fromAccount = accountRepository.findById(fromAccountId)
                 .orElseThrow(() -> new AccountNotFoundException(fromAccountId));
-        validateAccountActive(fromAccount);
 
         WithdrawalTransaction transaction = transactionFactory.createWithdrawal(
                 initiatorId, fromAccountId, amount, description, withdrawalLocation
         );
 
-        validateForSufficientFunds(fromAccount, amount);
+        try {
+            validateAccountActive(fromAccount);
+            validateForSufficientFunds(fromAccount, amount);
 
-        fromAccount.withdraw(amount);
-        transaction.setStatus(TransactionStatus.COMPLETED);
+            fromAccount.withdraw(amount);
+            transaction.setCompleted();
 
-        accountRepository.save(fromAccount);
-        transactionRepository.save(transaction);
+            accountRepository.save(fromAccount);
+            transactionRepository.save(transaction);
+        } catch (Exception e) {
+            transaction.setFailed(e);
+            transactionRepository.save(transaction);
 
-        return transaction;
+            MoneyFlowErrorLog errorLog = eventErrorLogFactory.createMoneyFlowErrorLog(
+                    transaction, e
+            );
+            moneyFlowErrorsRepository.save(errorLog);
+        } finally {
+            return transaction;
+        }
     }
 
     @Transactional
@@ -124,25 +160,34 @@ public class AccountService {
                 .orElseThrow(() ->
                         new IllegalArgumentException("Account not found: " + accountToFreeze));
 
-        if (account.isFrozen()) {
-            throw new IllegalStateException("Account is already frozen: " + accountToFreeze);
-        }
-
-        account.freeze();
-        accountRepository.save(account);
-
-        AccountFreezeEvent event = new AccountFreezeEvent(
-                UUID.randomUUID(),
+        AccountFreezeEvent event = lifecycleEventsFactory.createAccountFreezeEvent(
                 accountToFreeze,
                 initiatorId,
-                LocalDateTime.now(),
                 description,
                 ActionType.FREEZE
         );
 
-        accountFreezeActionsRepository.save(event);
+        try {
+            if (account.isFrozen()) {
+                throw new IllegalStateException("Account is already frozen: " + accountToFreeze);
+            }
 
-        return event;
+            account.freeze();
+            event.setCompleted();
+
+            accountRepository.save(account);
+            accountFreezeActionsRepository.save(event);
+        } catch (Exception e) {
+            event.setFailed(e);
+            accountFreezeActionsRepository.save(event);
+
+            FreezeErrorLog errorLog = eventErrorLogFactory.createFreezeErrorLog(
+                    event, e
+            );
+            lifecycleErrorsRepository.save(errorLog);
+        } finally {
+            return event;
+        }
     }
 
     @Transactional
@@ -151,25 +196,32 @@ public class AccountService {
                 .orElseThrow(() ->
                         new IllegalArgumentException("Account not found: " + accountToUnfreeze));
 
-        if (account.isActive()) {
-            throw new IllegalStateException("Account is already active: " + accountToUnfreeze);
-        }
-
-        account.activate();
-        accountRepository.save(account);
-
-        AccountFreezeEvent event = new AccountFreezeEvent(
-                UUID.randomUUID(),
+        AccountFreezeEvent event = lifecycleEventsFactory.createAccountFreezeEvent(
                 accountToUnfreeze,
                 initiatorId,
-                LocalDateTime.now(),
                 description,
                 ActionType.UNFREEZE
         );
+        try {
+            if (account.isActive()) {
+                throw new IllegalStateException("Account is already active: " + accountToUnfreeze);
+            }
+            account.activate();
+            event.setCompleted();
 
-        accountFreezeActionsRepository.save(event);
+            accountRepository.save(account);
+            accountFreezeActionsRepository.save(event);
+        } catch (Exception e) {
+            event.setFailed(e);
+            accountFreezeActionsRepository.save(event);
 
-        return event;
+            FreezeErrorLog errorLog = eventErrorLogFactory.createFreezeErrorLog(
+                    event, e
+            );
+            lifecycleErrorsRepository.save(errorLog);
+        } finally {
+            return event;
+        }
     }
 
     private void validateForSufficientFunds(Account fromAccount, BigDecimal amount) {

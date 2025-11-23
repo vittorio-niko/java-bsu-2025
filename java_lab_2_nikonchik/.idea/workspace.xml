@@ -5,15 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4695db4-b485-4969-8a24-ed1f6316902e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/logs/lifecycleerrorlogs/LifecycleErrorLog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/factories/EventErrorLogFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/repositories/LifecycleErrorsRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/repositories/MoneyFlowErrorsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/factories/LifecycleEventsFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/repositories/errorlogrepositories/LifecycleErrorsRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/actors/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/actors/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/logs/EventErrorLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/logs/EventErrorLog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/Event.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/lifecycleevents/AccountFreezeEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/lifecycleevents/AccountFreezeEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/DepositTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/DepositTransaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/Transaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/TransferTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/TransferTransaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/WithdrawalTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/events/moneyflowevents/WithdrawalTransaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/logs/lifecycleerrorlogs/LifecycleErrorLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/logs/lifecycleerrorlogs/FreezeErrorLog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/logs/moneyflowerrorlogs/MoneyFlowErrorLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/entities/logs/moneyflowerrorlogs/MoneyFlowErrorLog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/factories/EventErrorLogFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/factories/EventErrorLogFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/factories/TransactionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/factories/TransactionFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/repositories/LifecycleErrorsRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/repositories/MoneyFlowErrorsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/repositories/errorlogrepositories/MoneyFlowErrorsRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/services/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bsu/famcs/nikonchik/lab2/backend/services/AccountService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

@@ -5,10 +5,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 import java.math.BigDecimal;
 
+import bsu.famcs.nikonchik.lab2.backend.entities.events.Event.EventStatus;
 import org.springframework.stereotype.Component;
 
 import bsu.famcs.nikonchik.lab2.backend.entities.events.moneyflowevents.*;
-import bsu.famcs.nikonchik.lab2.backend.entities.events.moneyflowevents.Transaction.TransactionStatus;
 import bsu.famcs.nikonchik.lab2.backend.exceptions.AccountExceptions.InvalidAmountException;
 
 @Component
@@ -24,7 +24,7 @@ public class TransactionFactory {
                 initiatorId,
                 amount,
                 LocalDateTime.now(),
-                TransactionStatus.PENDING,
+                EventStatus.PENDING,
                 description,
                 fromAccount,
                 toAccount
@@ -42,7 +42,7 @@ public class TransactionFactory {
                 initiatorId,
                 amount,
                 LocalDateTime.now(),
-                TransactionStatus.PENDING,
+                EventStatus.PENDING,
                 description,
                 toAccount,
                 depositMethod
@@ -60,7 +60,7 @@ public class TransactionFactory {
                 initiatorId,
                 amount,
                 LocalDateTime.now(),
-                TransactionStatus.PENDING,
+                EventStatus.PENDING,
                 description,
                 fromAccount,
                 location

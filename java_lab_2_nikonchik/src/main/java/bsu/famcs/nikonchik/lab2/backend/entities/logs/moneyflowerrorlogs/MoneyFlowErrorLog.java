@@ -14,13 +14,8 @@ public class MoneyFlowErrorLog extends EventErrorLog {
     @Column(name = "amount", precision = 15, scale = 2, nullable = false, updatable = false)
     private final BigDecimal amount;
 
-    public enum TransactionType {
-        DEPOSIT, TRANSFER, WITHDRAWAL
-    }
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "transaction_type", nullable = false, length = 20, updatable = false)
-    private final TransactionType transactionType;
+    @Column(name = "transaction_type", nullable = false, length = 30, updatable = false)
+    private final String transactionType;
 
     public MoneyFlowErrorLog() {
         super();
@@ -32,7 +27,7 @@ public class MoneyFlowErrorLog extends EventErrorLog {
                              UUID initiatorId, LocalDateTime timestamp,
                              String errorCode, String errorMessage,
                              String stacktrace, BigDecimal amount,
-                             TransactionType transactionType) {
+                             String transactionType) {
         super(logId, eventId, initiatorId, timestamp,
                 errorCode, errorMessage, stacktrace);
         this.amount = Objects.requireNonNull(amount,
@@ -42,5 +37,5 @@ public class MoneyFlowErrorLog extends EventErrorLog {
     }
 
     public BigDecimal getAmount() { return amount; }
-    public TransactionType getTransactionType() { return transactionType; }
+    public String getTransactionType() { return transactionType; }
  }
